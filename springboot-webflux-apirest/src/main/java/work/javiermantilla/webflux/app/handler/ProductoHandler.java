@@ -14,12 +14,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import work.javiermantilla.webflux.app.models.documents.Categoria;
 import work.javiermantilla.webflux.app.models.documents.Producto;
@@ -38,7 +40,8 @@ public class ProductoHandler {
 	public Mono<ServerResponse> upload(ServerRequest request){		
 		String id = request.pathVariable("id");		
 		
-		return request.multipartData().map(multipart -> multipart.toSingleValueMap().get("file"))
+		return request.multipartData()
+				.map(multipart -> multipart.toSingleValueMap().get("file"))
 				.cast(FilePart.class)
 				.flatMap(file ->
 						service.findById(id)
@@ -101,19 +104,28 @@ public class ProductoHandler {
 	
 	public Mono<ServerResponse> crear(ServerRequest request){
 		Mono<Producto> producto = request.bodyToMono(Producto.class);
-		return producto.flatMap( p -> {
+		
+		return producto.flatMap(p -> {
+				Errors errors = new BeanPropertyBindingResult(p, "producto");
+				validator.validate(p, errors);
+				if(errors.hasErrors()) {
+					return Flux.fromIterable(errors.getFieldErrors())
+							.map(fieldError-> "El campo " + fieldError.getField()+ " " + fieldError.getDefaultMessage())
+							.collectList()
+							.flatMap(list -> 
+								ServerResponse.badRequest().bodyValue(list));
+				}
 				if(p.getCreateAt()==null) {
 					p.setCreateAt(new Date());
 				}
-				return service.save(p);				
-			}).flatMap( p -> ServerResponse.created(
-					URI.create("/api/v2/productos/".concat(p.getId())))
-					.contentType(MediaType.APPLICATION_JSON)
-					.body(BodyInserters.fromValue(p))
-			);
+				return service.save(p)				
+				.flatMap(pdb -> ServerResponse
+						.created(URI.create("/api/v2/productos/".concat(p.getId())))
+						.contentType(MediaType.APPLICATION_JSON)
+						.body(BodyInserters.fromValue(p)));
 					
+		});
 	}
-	
 	public Mono<ServerResponse> editar(ServerRequest request){
 		Mono<Producto> producto = request.bodyToMono(Producto.class);
 		String id = request.pathVariable("id");
