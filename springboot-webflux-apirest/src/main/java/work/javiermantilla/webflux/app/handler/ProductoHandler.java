@@ -122,6 +122,7 @@ public class ProductoHandler {
 				.flatMap(pdb -> ServerResponse
 						.created(URI.create("/api/v2/productos/".concat(p.getId())))
 						.contentType(MediaType.APPLICATION_JSON)
+						//.body(BodyInserters.fromValue(p)));
 						.body(BodyInserters.fromValue(p)));
 					
 		});

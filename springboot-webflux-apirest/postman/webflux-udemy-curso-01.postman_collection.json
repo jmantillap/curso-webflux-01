@@ -1,0 +1,441 @@
+{
+	"info": {
+		"_postman_id": "449c73da-99f9-417c-8ef5-5bb53de56f3f",
+		"name": "webflux-udemy-curso-01",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22646572"
+	},
+	"item": [
+		{
+			"name": "controller",
+			"item": [
+				{
+					"name": "listar",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/productos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/productos/67059c4a3c7b7e0de0d2bf84",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"productos",
+								"67059c4a3c7b7e0de0d2bf84"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "guardar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,\r\n    \"nombre\": \"\",\r\n    \"precio\": 456.89,\r\n    \"createAt\": null   ,\r\n    \"foto\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/productos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "guardar v2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "bicicleta guardar v2",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Usuario/Pictures/firma.png"
+								},
+								{
+									"key": "precio",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "categoria.id",
+									"value": "6705beae007679632bb6ca44",
+									"type": "text"
+								},
+								{
+									"key": "categoria.nombre",
+									"value": "Electrónico",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/api/productos/v2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"productos",
+								"v2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar producto",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": \"6705b42187233f1a6f285770\",\r\n        \"nombre\": \"Apple iPod actualizado\",\r\n        \"precio\": 50.89,\r\n        \"createAt\": \"2024-10-08T22:37:21.865+00:00\",\r\n        \"categoria\": {\r\n            \"id\": \"6705b42187233f1a6f28576c\",\r\n            \"nombre\": \"Computación\"\r\n        },\r\n        \"foto\": null\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/productos/6705b42187233f1a6f285770",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"productos",
+								"6705b42187233f1a6f285770"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/productos/6705b59987233f1a6f28578a",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"productos",
+								"6705b59987233f1a6f28578a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Usuario/Pictures/imagen_to_toon_javier.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/api/productos/upload/6705beae007679632bb6ca49",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"productos",
+								"upload",
+								"6705beae007679632bb6ca49"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Funtional",
+			"item": [
+				{
+					"name": "listar V3",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v3/productos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v3",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listar V2",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v2/productos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v2 getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v2/productos/6705d4c9c18280512eaa92a8",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"productos",
+								"6705d4c9c18280512eaa92a8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v2 guardar",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": null,    \r\n    \"createAt\": \"2024-10-09T13:43:02.839+00:00\",\r\n    \"categoria\": {\r\n        \"id\": \"670688669ec58e729c90b934\",\r\n        \"nombre\": \"Electrónico\"\r\n    },\r\n    \"foto\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v2/productos",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"productos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "V2 editar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": \"67068be9df78d427b7bc0477\",\r\n    \"nombre\": \"Sony Camara HD Digital actualizado \",\r\n    \"precio\": 177.89,\r\n    \"createAt\": \"2024-10-09T13:43:02.839+00:00\",\r\n    \"categoria\": {\r\n        \"id\": \"670688669ec58e729c90b934\",\r\n        \"nombre\": \"Electrónico\"\r\n    },\r\n    \"foto\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/v2/productos/67068be9df78d427b7bc0477",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"productos",
+								"67068be9df78d427b7bc0477"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete v2",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/v2/productos/67068e15df78d427b7bc04fc",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"productos",
+								"67068e15df78d427b7bc04fc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upload v2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Usuario/Pictures/imagen_to_toon_javier.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/api/v2/productos/upload/6706b119df78d427b7bc063f",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"productos",
+								"upload",
+								"6706b119df78d427b7bc063f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "guardar con file v2",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nombre",
+									"value": "bicicleta guardar v2",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Usuario/Pictures/firma.png"
+								},
+								{
+									"key": "precio",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "categoria.id",
+									"value": "6706c2d3534f871effbbae46",
+									"type": "text"
+								},
+								{
+									"key": "categoria.nombre",
+									"value": "Electrónico",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:8080/api/v2/productos/crear",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v2",
+								"productos",
+								"crear"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
