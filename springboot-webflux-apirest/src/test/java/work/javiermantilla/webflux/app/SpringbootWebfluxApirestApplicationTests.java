@@ -8,6 +8,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.core.ParameterizedTypeReference;
 
@@ -22,8 +23,9 @@ import work.javiermantilla.webflux.app.models.documents.Categoria;
 import work.javiermantilla.webflux.app.models.documents.Producto;
 import work.javiermantilla.webflux.app.models.services.ProductoService;
 
-
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@AutoConfigureWebTestClient
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+//@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Log4j2
 class SpringbootWebfluxApirestApplicationTests {
 
@@ -39,7 +41,7 @@ class SpringbootWebfluxApirestApplicationTests {
 	@Test
 	void listarTest() {
 		client.get()
-		.uri("/api/v2/productos")
+		.uri(url)
 		.accept(MediaType.APPLICATION_JSON)
 		.exchange()
 		.expectStatus().isOk()
@@ -88,7 +90,7 @@ class SpringbootWebfluxApirestApplicationTests {
 		Producto producto = new Producto("Mesa comedor", 100.00, categoria);
 		
 		client.post()
-		.uri("/api/v2/productos")
+		.uri(url)
 		.contentType(MediaType.APPLICATION_JSON)
 		.accept(MediaType.APPLICATION_JSON)
 		.body(Mono.just(producto), Producto.class)
@@ -116,12 +118,12 @@ class SpringbootWebfluxApirestApplicationTests {
 		.exchange()
 		.expectStatus().isCreated()
 		.expectHeader().contentType(MediaType.APPLICATION_JSON)
-		//.expectBody(new ParameterizedTypeReference<LinkedHashMap<String, Object>>() {})
+		//.expectBody(new ParameterizedTypeReference<LinkedHashMap<String, Object>>() {}) //Para llamar a controlador ProductoController.class "/api/productos"
 		.expectBody(Producto.class)
 		.consumeWith(response -> {
 			Producto p= response.getResponseBody();
-			//Object o = response.getResponseBody().get("producto");
-			//Producto p = new ObjectMapper().convertValue(o, Producto.class);
+			//Object o = response.getResponseBody().get("producto"); //Para llamar a controlador ProductoController.class "/api/productos"
+			//Producto p = new ObjectMapper().convertValue(o, Producto.class); //Para llamar a controlador ProductoController.class "/api/productos"
 			Assertions.assertThat(p.getId()).isNotEmpty();
 			Assertions.assertThat(p.getNombre()).isEqualTo("Mesa comedor");
 			Assertions.assertThat(p.getCategoria().getNombre()).isEqualTo("Muebles");
