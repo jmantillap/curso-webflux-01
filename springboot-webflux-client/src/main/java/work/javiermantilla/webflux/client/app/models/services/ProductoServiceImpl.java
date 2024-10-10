@@ -19,23 +19,16 @@ import work.javiermantilla.webflux.client.app.models.dto.Producto;
 
 import org.springframework.core.io.buffer.DataBuffer;
 
-
-
-
-
-
-
 @Service
 @RequiredArgsConstructor
 public class ProductoServiceImpl implements ProductoService {
 	
 
-	private final WebClient client;
-	
+	//private final WebClient client;
+	private final WebClient.Builder client;
 	@Override
-	public Flux<Producto> findAll() {		
-		
-		return client.get().accept(MediaType.APPLICATION_JSON )
+	public Flux<Producto> findAll() {
+		return client.build().get().accept(MediaType.APPLICATION_JSON )
 				.exchangeToFlux(response -> response.bodyToFlux(Producto.class))
 				;
 		
@@ -46,7 +39,7 @@ public class ProductoServiceImpl implements ProductoService {
 	public Mono<Producto> findById(String id) {
 		Map<String, Object> params = new HashMap<>();
 		params.put("id", id);
-		return client.get().uri("/{id}", params)
+		return client.build().get().uri("/{id}", params)
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(Producto.class);
@@ -55,7 +48,7 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public Mono<Producto> save(Producto producto) {
 		
-		return client.post()
+		return client.build().post()
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)				
 				.bodyValue(producto)
@@ -66,7 +59,7 @@ public class ProductoServiceImpl implements ProductoService {
 	@Override
 	public Mono<Producto> update(Producto producto, String id) {
 		
-		return client.put()
+		return client.build().put()
 				.uri("/{id}", Collections.singletonMap("id", id))
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -77,7 +70,7 @@ public class ProductoServiceImpl implements ProductoService {
 
 	@Override
 	public Mono<Void> delete(String id) {
-		return client.delete().uri("/{id}", Collections.singletonMap("id", id))
+		return client.build().delete().uri("/{id}", Collections.singletonMap("id", id))
 				.retrieve()
 				.bodyToMono(Void.class);
 	}
@@ -91,7 +84,7 @@ public class ProductoServiceImpl implements ProductoService {
 			h.setContentDispositionFormData("file", file.filename());
 		});	
 		
-		return client.post()
+		return client.build().post()
 				.uri("/upload/{id}", Collections.singletonMap("id", id))
 				.contentType(MediaType.MULTIPART_FORM_DATA)
 				.bodyValue(partsBuilder.build())
