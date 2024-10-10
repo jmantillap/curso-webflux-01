@@ -17,13 +17,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import work.javiermantilla.webflux.client.app.models.dto.Producto;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.buffer.DataBuffer;
 
-import static org.springframework.http.MediaType.*;
 
-// import static org.springframework.web.reactive.function.BodyInserters.*;
+
+
 
 
 
@@ -35,11 +33,7 @@ public class ProductoServiceImpl implements ProductoService {
 	private final WebClient client;
 	
 	@Override
-	public Flux<Producto> findAll() {
-		
-//		return client.get().accept(MediaType.APPLICATION_JSON )
-//				.exchange()
-//				.flatMapMany(response -> response.bodyToFlux(Producto.class));
+	public Flux<Producto> findAll() {		
 		
 		return client.get().accept(MediaType.APPLICATION_JSON )
 				.exchangeToFlux(response -> response.bodyToFlux(Producto.class))
@@ -63,8 +57,7 @@ public class ProductoServiceImpl implements ProductoService {
 		
 		return client.post()
 				.accept(MediaType.APPLICATION_JSON)
-				.contentType(MediaType.APPLICATION_JSON)
-				//.body(fromObject(producto))
+				.contentType(MediaType.APPLICATION_JSON)				
 				.bodyValue(producto)
 				.retrieve()
 				.bodyToMono(Producto.class);

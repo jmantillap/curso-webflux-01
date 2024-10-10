@@ -98,8 +98,8 @@ public class ProductoHandler {
 	
 	private Mono<ServerResponse> errorHandler(Mono<ServerResponse> response){
 		return response.onErrorResume(error -> {
-			if (error instanceof WebClientResponseException) {
-				WebClientResponseException errorResponse = (WebClientResponseException) error;
+			if (error instanceof WebClientResponseException errorResponse) {
+				errorResponse = (WebClientResponseException) error;
 				if(errorResponse.getStatusCode() == HttpStatus.NOT_FOUND) {
 					Map<String, Object> body = new HashMap<>();
 					body.put("error", "No existe el producto: ".concat(errorResponse.getMessage()));
@@ -111,8 +111,7 @@ public class ProductoHandler {
 			}else {
 				WebClientRequestException errorRequest = (WebClientRequestException) error;
 				return Mono.error(errorRequest);
-			}
-			
+			}		
 			
 		});
 	}
